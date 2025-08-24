@@ -6,15 +6,15 @@
 #    By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/19 17:41:20 by pbongiov          #+#    #+#              #
-#    Updated: 2025/08/19 18:09:14 by pbongiov         ###   ########.fr        #
+#    Updated: 2025/08/24 15:45:04 by pbongiov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS_FILES = plátōn.c
+SRCS_FILES = socrates.c platao.c
 
-SRCS_DIR = srcs
+SRCS_DIR = src
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
@@ -22,7 +22,7 @@ OBJS_DIR = objs
 
 OBJS	=$(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g -Iinclude #-Wall -Wextra -Werror
 CC = cc
 
 all:	$(NAME)
@@ -45,6 +45,9 @@ fclean:		clean
 re:		fclean 	all
 
 r:
-	make re && clear && ./philo
+	make re && clear && ./philo 3 2 3 4
+
+v:
+	make re && clear && valgrind ./philo 10 2 3 4
 
 .PHONY : all clean fclean re
