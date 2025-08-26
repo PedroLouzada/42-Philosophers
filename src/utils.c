@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 17:23:16 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/26 17:35:44 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:28:12 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,12 @@ long long int	ft_atol(const char *str)
 		i++;
 	}
 	return (n * sign);
+}
+
+unsigned long	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
