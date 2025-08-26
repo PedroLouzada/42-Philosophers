@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/24 15:56:09 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:30:33 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,25 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_table t_table;
+typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
-	pthread_t	thread_id;
-	int			index;
-	t_table		*table;
-}				t_philo;
+	pthread_t			thread_id;
+	int					index;
+	t_table				*table;
+}						t_philo;
 
- struct s_table
+struct					s_table
 {
-	t_philo		*philo;
+	int					forks;
+	long long int		time_to_die;
+	long long int		time_to_eat;
+	long long int		time_to_sleep;
+	t_philo				*philo;
 };
 
-int				ft_atoi(const char *s);
+long long int			ft_atol(const char *s);
+void					data_init(t_table *table, char **av);
+
 #endif

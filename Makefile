@@ -6,13 +6,13 @@
 #    By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/19 17:41:20 by pbongiov          #+#    #+#              #
-#    Updated: 2025/08/24 15:45:04 by pbongiov         ###   ########.fr        #
+#    Updated: 2025/08/26 15:24:27 by pbongiov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS_FILES = socrates.c platao.c
+SRCS_FILES = philo.c utils.c initialize.c
 
 SRCS_DIR = src
 

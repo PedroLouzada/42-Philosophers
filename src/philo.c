@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   socrates.c                                         :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:46:00 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/24 18:29:53 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:31:19 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*routine(t_philo *philo)
 	static int i;
 
 	i = 0;
-	printf("arg: %d\n", philo->index);
+	//printf("arg: %d\n", philo->index);
 	//sleep(5);
 	return NULL;
 }
@@ -28,12 +28,15 @@ int main(int ac, char **av)
 	int i;
 	int n;
 	
-	if (ac < 4 || ac > 5)
+	if (ac < 5 || ac > 6)
 		return (0);
 	i = 0;
-	n = ft_atoi(av[1]);
-	table.philo = malloc(sizeof(t_philo) * (n + 1));
-	while (i < n)
+	data_init(&table, av);
+	printf("Forks: %d\n", table.forks);
+	printf("Die  : %lld\n", table.time_to_die);
+	printf("Eat  : %lld\n", table.time_to_eat);
+	printf("Sleep: %lld\n", table.time_to_sleep);
+	while (i < table.forks)
 	{
 		table.philo[i].table = &table;
 		table.philo[i].index = i;
@@ -41,7 +44,7 @@ int main(int ac, char **av)
 		i++;
 	}
 	i = 0;
-	while (i < n)
+	while (i < table.forks)
 		pthread_join(table.philo[i++].thread_id, NULL);
 	free(table.philo);
 	//sleep(10);

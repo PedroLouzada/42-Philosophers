@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   platao.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 17:23:16 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/23 17:33:16 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:35:44 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+long long int	ft_atol(const char *str)
 {
-	int	i;
-	int	sign;
-	int	n;
+	int				i;
+	int				sign;
+	long long int	n;
 
 	i = 0;
 	n = 0;
