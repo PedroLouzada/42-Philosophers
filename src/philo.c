@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:46:00 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/26 19:17:04 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:36:58 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ int	main(int ac, char **av)
 	while (i < table.heads)
 		pthread_join(table.philo[i++].thread_id, NULL);
 	free(table.philo);
+	i = 0;
+	while (i < table.heads)
+		pthread_mutex_destroy(&table.philo[i++].lock);
 	// sleep(10);
 }

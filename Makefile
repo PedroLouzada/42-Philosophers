@@ -6,7 +6,7 @@
 #    By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/19 17:41:20 by pbongiov          #+#    #+#              #
-#    Updated: 2025/08/26 18:54:34 by pbongiov         ###   ########.fr        #
+#    Updated: 2025/08/30 17:38:08 by pbongiov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,9 @@ fclean:		clean
 re:		fclean 	all
 
 r:
-	make re && clear && ./philo 3 2 3 4
+	make re && clear && ./philo 10 500 500 300
 
 v:
-	make re && clear && valgrind ./philo 10 2 3 4
+	make re && clear && valgrind ./philo 10 500 500 300
 
 .PHONY : all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 17:23:16 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/26 19:28:12 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:20:02 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,15 @@ unsigned long	get_time(void)
 
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	time_passed(t_table *table)
+{
+	static unsigned long last_time;
+	static unsigned long current_time;
+
+	if (current_time == 0)
+		last_time = get_time();
+	current_time = get_time();
+	table->time = current_time - last_time;
 }
