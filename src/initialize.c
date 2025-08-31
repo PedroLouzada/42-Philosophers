@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:24:05 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/30 19:06:15 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/08/31 19:10:39 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,15 @@ void	data_init(t_table *table, char **av)
 	table->philo = malloc(sizeof(t_philo) * (table->heads + 1));
 	if (!table->philo)
 		exit(0);
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->heads);
+	if (!table->forks)
+	{
+		free(table->philo);
+		exit(0);
+	}
 	while (i < table->heads)
 	{
-		table->philo[i].fork = -1;
-		table->philo[i].index = i++;
-		pthread_mutex_init(&table->philo[i].lock, NULL);
+		table->philo[i].index = i + 1;
+		pthread_mutex_init(&table->forks[i++], NULL);
 	}
 }
