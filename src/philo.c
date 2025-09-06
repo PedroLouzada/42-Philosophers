@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:46:00 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/31 20:08:47 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/06 23:57:49 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ int	main(int ac, char **av)
 	while (i < table.heads)
 	{
 		table.philo[i].table = &table;
-		pthread_create(&table.philo[i].thread_id, NULL, (void *)routine,
-			&table.philo[i]);
+		pthread_create(&table.philo[i].thread_id, NULL, (void *)routine, &table.philo[i]);
+		pthread_detach(table.philo[i].thread_id);
 		i++;
 	}
 	pthread_create(&table.die_id, NULL, (void *)die, &table);
-	pthread_detach(table.die_id);
+	pthread_join(table.die_id, NULL);
 	i = 0;
 	while (i < table.heads)
-		pthread_join(table.philo[i++].thread_id, NULL);
-	i = 0;
-	while (i < table.heads)
+	{
+		pthread_mutex_destroy(&table.philo[i].last_meal_mutex);
 		pthread_mutex_destroy(&table.forks[i++]);
+	}
 	free(table.philo);
 	free(table.forks);
 }

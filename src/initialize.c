@@ -6,22 +6,43 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:24:05 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/31 19:10:39 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/06 23:57:14 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/// @brief Initialize all global values
+void	_debug(t_table *table)
+{
+	int	i;
+
+	printf("Philo: %i\n", table->heads);
+	printf("Time to die: %lu\n", table->time_to_die);
+	printf("Time to eat: %lu\n", table->time_to_eat);
+	printf("Time to sleep: %lu\n", table->time_to_sleep);
+	printf("Time passed: %lu\n", table->time);
+	i = 0;
+	while (i < table->heads)
+	{
+		printf("==========================\n");
+		printf("Philo index: %i\n", table->philo[i].index);
+		printf("Philo Last meal: %lu\n", table->philo[i].time_to_live);
+		printf("Philo left: %i\n", table->philo[i].left);
+		printf("Philo right: %i\n", table->philo[i].right);
+		i++;
+	}
+}
+
 void	data_init(t_table *table, char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	table->heads = ft_atol(av[1]);
-	table->time_to_die = ft_atol(av[2]) * 1000;
-	table->time_to_eat = ft_atol(av[3]) * 1000;
-	table->time_to_sleep = ft_atol(av[4]) * 1000;
+	table->time_to_die = ft_atol(av[2]);
+	table->time_to_eat = ft_atol(av[3]);
+	table->time_to_sleep = ft_atol(av[4]);
+	table->time = 0;
 	if (table->heads < 1 || table->time_to_die < 1 || table->time_to_eat < 1
 		|| table->time_to_sleep < 1)
 	{
@@ -40,6 +61,19 @@ void	data_init(t_table *table, char **av)
 	while (i < table->heads)
 	{
 		table->philo[i].index = i + 1;
-		pthread_mutex_init(&table->forks[i++], NULL);
+		if (table->philo[i].index % 2)
+		{
+			table->philo[i].left = i;
+			table->philo[i].right = table->philo[i].index % table->heads;
+		}
+		else
+		{
+			table->philo[i].left = table->philo[i].index % table->heads;
+			table->philo[i].right = i;
+		}
+		pthread_mutex_init(&table->forks[i], NULL);
+		pthread_mutex_init(&table->philo[i].last_meal_mutex, NULL);
+		i++;
 	}
+	//_debug(table);
 }

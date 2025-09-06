@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 17:23:16 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/08/30 17:20:02 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/07 00:43:17 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,22 @@ void	time_passed(t_table *table)
 		last_time = get_time();
 	current_time = get_time();
 	table->time = current_time - last_time;
+}
+
+void	my_sleep(unsigned long time)
+{
+	unsigned long next_time;
+
+	next_time = get_time() + time;
+	while (get_time() < next_time)
+		usleep(250);
+}
+
+void print_msg(t_philo *philo, char *msg)
+{
+	t_table *table;
+
+	table = philo->table;
+	time_passed(table);
+	printf("%ld %i %s\n", table->time, philo->index, msg);
 }
