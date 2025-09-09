@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:24:05 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/06 23:57:14 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/09 19:44:01 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	_debug(t_table *table)
 	int	i;
 
 	printf("Philo: %i\n", table->heads);
+	printf("Optional: %i\n", table->optional);
 	printf("Time to die: %lu\n", table->time_to_die);
 	printf("Time to eat: %lu\n", table->time_to_eat);
 	printf("Time to sleep: %lu\n", table->time_to_sleep);
@@ -29,6 +30,7 @@ void	_debug(t_table *table)
 		printf("Philo Last meal: %lu\n", table->philo[i].time_to_live);
 		printf("Philo left: %i\n", table->philo[i].left);
 		printf("Philo right: %i\n", table->philo[i].right);
+		printf("Has_eaten: %i\n", table->philo[i].has_eaten);
 		i++;
 	}
 }
@@ -43,6 +45,7 @@ void	data_init(t_table *table, char **av)
 	table->time_to_eat = ft_atol(av[3]);
 	table->time_to_sleep = ft_atol(av[4]);
 	table->time = 0;
+	table->optional = 0;
 	if (table->heads < 1 || table->time_to_die < 1 || table->time_to_eat < 1
 		|| table->time_to_sleep < 1)
 	{
@@ -61,6 +64,7 @@ void	data_init(t_table *table, char **av)
 	while (i < table->heads)
 	{
 		table->philo[i].index = i + 1;
+		table->philo[i].has_eaten = 0;
 		if (table->philo[i].index % 2)
 		{
 			table->philo[i].left = i;

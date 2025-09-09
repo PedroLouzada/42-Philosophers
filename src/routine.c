@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:53:54 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/07 00:44:45 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:59:39 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	ph_eat(t_table *table, t_philo *philo)
 	pthread_mutex_lock(&philo->last_meal_mutex);
 	philo->time_to_live = get_time() + table->time_to_die;
 	pthread_mutex_unlock(&philo->last_meal_mutex);
+	philo->has_eaten++;
 	print_msg(philo, "is eating");
 	my_sleep(table->time_to_eat);
 	pthread_mutex_unlock(&table->forks[philo->right]);
@@ -67,26 +68,30 @@ static void	ph_sleep(t_table *table, t_philo *philo)
 	my_sleep(table->time_to_sleep);
 }
 
-static void ph_think(t_table *table, t_philo *philo)
+static void ph_think(t_table *table, t_philo *philo, int think)
 {
 	time_passed(table);
-	if (table->time_to_die - (table->time_to_eat + table->time_to_sleep) - 100 < 100)
-	 	return;
+	if (think < 100)
+		return;
 	print_msg(philo, "is thinking");
-	my_sleep(table->time_to_die - (table->time_to_eat + table->time_to_sleep) - 100);
+	my_sleep(think);
 }
 
 void	*routine(t_philo *philo)
 {
+	int think;
 	t_table	*table;
 
 	table = philo->table;
+	think = table->time_to_die - (table->time_to_eat + table->time_to_sleep);
 	philo->time_to_live = get_time() + table->time_to_die;
 	while (1)
 	{
+		// if (table->optional && philo->has_eaten == table->to_eat)
+		// 	break;
 		ph_eat(table, philo);
 		ph_sleep(table, philo);
-		ph_think(table, philo);
+		ph_think(table, philo, think);
 	}
 	return (NULL);
 }

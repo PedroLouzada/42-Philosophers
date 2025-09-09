@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:46:00 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/06 23:57:49 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/09 19:40:44 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ int	main(int ac, char **av)
 	}
 	i = 0;
 	data_init(&table, av);
+	if (ac == 6)
+	{
+		table.optional = 1;
+		table.to_eat = ft_atol(av[5]);
+	}
+	//_debug(&table);
 	while (i < table.heads)
 	{
 		table.philo[i].table = &table;
