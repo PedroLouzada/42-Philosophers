@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 17:23:16 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/07 00:43:17 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:51:08 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ unsigned long	get_time(void)
 
 void	time_passed(t_table *table)
 {
-	static unsigned long last_time;
-	static unsigned long current_time;
+	static unsigned long	last_time;
+	static unsigned long	current_time;
 
 	if (current_time == 0)
 		last_time = get_time();
@@ -58,18 +58,26 @@ void	time_passed(t_table *table)
 
 void	my_sleep(unsigned long time)
 {
-	unsigned long next_time;
+	unsigned long	next_time;
 
 	next_time = get_time() + time;
 	while (get_time() < next_time)
 		usleep(250);
 }
 
-void print_msg(t_philo *philo, char *msg)
+int	print_msg(t_philo *philo, char *msg)
 {
 	t_table *table;
 
 	table = philo->table;
 	time_passed(table);
+	pthread_mutex_lock(&table->over_mutex);
+	if (table->over)
+	{
+		pthread_mutex_unlock(&table->over_mutex);
+		return 1;
+	}
+	pthread_mutex_unlock(&table->over_mutex);
 	printf("%ld %i %s\n", table->time, philo->index, msg);
+	return 0;
 }

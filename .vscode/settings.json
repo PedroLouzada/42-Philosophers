@@ -2,6 +2,10 @@
 	"files.associations": {
 		"philo.h": "c",
 		"unistd.h": "c",
-		"cstdlib": "c"
+		"cstdlib": "c",
+		"array": "c",
+		"string": "c",
+		"string_view": "c",
+		"span": "c"
 	}
 }
