@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/20 16:24:03 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/20 20:14:42 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_philo
 	unsigned long		time_to_live;
 	int					left;
 	int					right;
-	pthread_mutex_t		last_meal_mutex;
 	pthread_mutex_t		live_mutex;
 	t_table				*table;
 }						t_philo;
@@ -56,6 +55,7 @@ struct					s_table
 	t_philo				*philo;
 };
 
+void update_time(t_table *table, t_philo *philo);
 int						char_check(char **str);
 int						finish_check(t_table *table, t_philo *philo);
 int						timer_check(t_table *table, t_philo *philo);

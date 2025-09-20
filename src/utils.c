@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 17:23:16 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/20 16:28:41 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/20 20:06:14 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,16 @@ int	print_msg(t_philo *philo, char *msg)
 	t_table	*table;
 
 	table = philo->table;
+	pthread_mutex_lock(&table->time_mutex);
 	time_passed(table);
+	pthread_mutex_unlock(&table->time_mutex);
 	pthread_mutex_lock(&table->over_mutex);
 	if (table->over)
 	{
 		pthread_mutex_unlock(&table->over_mutex);
-		return (1);
+		return (0);
 	}
 	pthread_mutex_unlock(&table->over_mutex);
 	printf("%ld %i %s\n", table->time, philo->index, msg);
-	return (0);
+	return (1);
 }

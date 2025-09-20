@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:24:05 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/20 16:25:43 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/20 20:00:38 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	mutex_init(t_table *table)
 			table->philo[i].right = i;
 		}
 		pthread_mutex_init(&table->forks[i], NULL);
-		pthread_mutex_init(&table->philo[i].last_meal_mutex, NULL);
 		pthread_mutex_init(&table->philo[i++].live_mutex, NULL);
 	}
 	pthread_mutex_init(&table->finished_mutex, NULL);
@@ -95,7 +94,6 @@ void	free_stuff(t_table *table)
 	while (i < table->heads)
 	{
 		pthread_mutex_destroy(&table->philo[i].live_mutex);
-		pthread_mutex_destroy(&table->philo[i].last_meal_mutex);
 		pthread_mutex_destroy(&table->forks[i++]);
 	}
 	pthread_mutex_destroy(&table->finished_mutex);
