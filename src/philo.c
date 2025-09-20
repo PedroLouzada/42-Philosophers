@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:46:00 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/18 18:00:10 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:17:44 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	main(int ac, char **av)
 {
-	static t_table	table;
-	int				i;
-	int				res;
+	int		i;
+	int		res;
+	t_table	table;
 
 	if (ac < 5 || ac > 6)
-		return (printf(MSG), 0);
+		return (printf(MSG MSG2), 0);
 	res = data_init(&table, av);
 	if (!res)
 		return (printf("Error on memory allocation\n"), 0);

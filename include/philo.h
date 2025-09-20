@@ -6,15 +6,15 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/18 17:48:48 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:24:03 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# define MSG "Expected: Num_of_philo / Time_to_die / Time_to_eat / Time_to_sleep\n"
-
+# define MSG "Expected: Num_of_philo / Time_to_die /"
+# define MSG2 " Time_to_eat / Time_to_sleep\n"
 # include <pthread.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -56,6 +56,9 @@ struct					s_table
 	t_philo				*philo;
 };
 
+int						char_check(char **str);
+int						finish_check(t_table *table, t_philo *philo);
+int						timer_check(t_table *table, t_philo *philo);
 long long int			ft_atol(const char *s);
 void					*routine(t_philo *philo);
 void					*die(t_table *table);

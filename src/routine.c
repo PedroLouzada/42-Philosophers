@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:53:54 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/18 18:03:50 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:16:38 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,8 @@ void	*die(t_table *table)
 	j = 0;
 	while (1)
 	{
-		pthread_mutex_lock(&table->philo[i].last_meal_mutex);
-		pthread_mutex_lock(&table->philo[i].live_mutex);
-		if (get_time() > table->philo[i].time_to_live)
-		{
-			my_sleep(5);
-			pthread_mutex_unlock(&table->philo[i].last_meal_mutex);
-			pthread_mutex_lock(&table->time_mutex);
-			print_msg(&table->philo[i], "died");
-			pthread_mutex_unlock(&table->time_mutex);
-			pthread_mutex_unlock(&table->philo[i].live_mutex);
-			pthread_mutex_lock(&table->over_mutex);
-			table->over = 1;
-			pthread_mutex_unlock(&table->over_mutex);
+		if (!timer_check(table, &table->philo[i]))
 			break ;
-		}
-		pthread_mutex_unlock(&table->philo[i].live_mutex);
-		pthread_mutex_unlock(&table->philo[i].last_meal_mutex);
 		pthread_mutex_lock(&table->finished_mutex);
 		if (table->has_finished == table->heads)
 		{
@@ -87,7 +72,7 @@ static void	ph_sleep(t_table *table, t_philo *philo)
 
 static void	ph_think(t_table *table, t_philo *philo, int think)
 {
-	if (think < 100)
+	if (think < 10)
 		return ;
 	pthread_mutex_lock(&table->time_mutex);
 	print_msg(philo, "is thinking");
@@ -108,20 +93,8 @@ void	*routine(t_philo *philo)
 	while (1)
 	{
 		ph_eat(table, philo);
-		if (table->optional && philo->has_eaten == table->to_eat)
-		{
-			pthread_mutex_lock(&table->finished_mutex);
-			table->has_finished++;
-			pthread_mutex_unlock(&table->finished_mutex);
+		if (!finish_check(table, philo))
 			break ;
-		}
-		pthread_mutex_lock(&table->over_mutex);
-		if (table->over)
-		{
-			pthread_mutex_unlock(&table->over_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&table->over_mutex);
 		ph_sleep(table, philo);
 		ph_think(table, philo, think);
 	}

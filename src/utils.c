@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 17:23:16 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/18 17:51:08 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:28:41 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,27 @@ unsigned long	get_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	time_passed(t_table *table)
+int	char_check(char **str)
 {
-	static unsigned long	last_time;
-	static unsigned long	current_time;
+	int	i;
+	int	j;
 
-	if (current_time == 0)
-		last_time = get_time();
-	current_time = get_time();
-	table->time = current_time - last_time;
+	i = 1;
+	while (str[i])
+	{
+		j = 0;
+		while (str[i][j])
+		{
+			if (!(str[i][j] >= '0' && str[i][j] <= '9'))
+			{
+				printf("Expected only nummeric arguments\n");
+				return (0);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 
 void	my_sleep(unsigned long time)
@@ -67,7 +79,7 @@ void	my_sleep(unsigned long time)
 
 int	print_msg(t_philo *philo, char *msg)
 {
-	t_table *table;
+	t_table	*table;
 
 	table = philo->table;
 	time_passed(table);
@@ -75,9 +87,9 @@ int	print_msg(t_philo *philo, char *msg)
 	if (table->over)
 	{
 		pthread_mutex_unlock(&table->over_mutex);
-		return 1;
+		return (1);
 	}
 	pthread_mutex_unlock(&table->over_mutex);
 	printf("%ld %i %s\n", table->time, philo->index, msg);
-	return 0;
+	return (0);
 }

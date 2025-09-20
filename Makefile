@@ -6,13 +6,13 @@
 #    By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/19 17:41:20 by pbongiov          #+#    #+#              #
-#    Updated: 2025/09/18 16:50:24 by pbongiov         ###   ########.fr        #
+#    Updated: 2025/09/20 16:05:41 by pbongiov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS_FILES = philo.c utils.c initialize.c routine.c
+SRCS_FILES = philo.c utils.c initialize.c routine.c routine_utils.c
 
 SRCS_DIR = src
 
