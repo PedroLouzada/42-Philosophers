@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:02:02 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/23 15:31:55 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/23 16:22:05 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	update_time(t_table *table, t_philo *philo)
 
 void	*one_philo(t_philo *philo)
 {
-	t_table *table;
+	t_table	*table;
 
 	table = philo->table;
 	pthread_mutex_lock(&table->forks[0]);
@@ -76,5 +76,5 @@ void	*one_philo(t_philo *philo)
 	my_sleep(table->time_to_die + 1);
 	print_msg(philo, "died");
 	pthread_mutex_unlock(&table->forks[0]);
-	return NULL;
+	return (NULL);
 }

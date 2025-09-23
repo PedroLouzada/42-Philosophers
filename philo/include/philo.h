@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/23 15:23:06 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/23 16:33:23 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+#define malloc(x) NULL
 
 typedef struct s_table	t_table;
 
