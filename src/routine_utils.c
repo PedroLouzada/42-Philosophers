@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:02:02 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/20 20:14:23 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:31:55 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,23 @@ void	time_passed(t_table *table)
 	table->time = current_time - last_time;
 }
 
-void update_time(t_table *table, t_philo *philo)
+void	update_time(t_table *table, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->live_mutex);
 	philo->time_to_live = get_time() + table->time_to_die;
 	pthread_mutex_unlock(&philo->live_mutex);
 	philo->has_eaten++;
+}
+
+void	*one_philo(t_philo *philo)
+{
+	t_table *table;
+
+	table = philo->table;
+	pthread_mutex_lock(&table->forks[0]);
+	print_msg(philo, "take a fork");
+	my_sleep(table->time_to_die + 1);
+	print_msg(philo, "died");
+	pthread_mutex_unlock(&table->forks[0]);
+	return NULL;
 }

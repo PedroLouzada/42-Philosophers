@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:24:05 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/20 20:00:38 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:32:54 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static void	mutex_init(t_table *table)
 
 int	data_init(t_table *table, char **av)
 {
-	int	i;
-
 	if (!char_check(av))
 		return (2);
 	table->heads = ft_atol(av[1]);
@@ -72,6 +70,14 @@ void	thread_create(t_table *table)
 	int	i;
 
 	i = 0;
+	if (table->heads == 1)
+	{
+		table->philo[0].table = table;
+		pthread_create(&table->philo[0].thread_id, NULL, (void *)one_philo,
+			&table->philo[0]);
+		pthread_join(table->philo[0].thread_id, NULL);
+		return ;
+	}
 	while (i < table->heads)
 	{
 		table->philo[i].table = table;

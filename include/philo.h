@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/20 20:14:42 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:23:06 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ struct					s_table
 	t_philo				*philo;
 };
 
-void update_time(t_table *table, t_philo *philo);
+void					*one_philo(t_philo *philo);
+void					update_time(t_table *table, t_philo *philo);
 int						char_check(char **str);
 int						finish_check(t_table *table, t_philo *philo);
 int						timer_check(t_table *table, t_philo *philo);

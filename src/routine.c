@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:53:54 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/20 20:15:44 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:33:14 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ph_sleep(t_table *table, t_philo *philo)
 	my_sleep(table->time_to_sleep);
 }
 
-static void	ph_think(t_table *table, t_philo *philo, int think)
+static void	ph_think(t_philo *philo, int think)
 {
 	if (think < 10)
 		return ;
@@ -97,7 +97,7 @@ void	*routine(t_philo *philo)
 		if (!finish_check(table, philo))
 			break ;
 		ph_sleep(table, philo);
-		ph_think(table, philo, think);
+		ph_think(philo, think);
 	}
 	return (NULL);
 }

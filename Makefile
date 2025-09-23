@@ -6,7 +6,7 @@
 #    By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/19 17:41:20 by pbongiov          #+#    #+#              #
-#    Updated: 2025/09/20 16:05:41 by pbongiov         ###   ########.fr        #
+#    Updated: 2025/09/23 15:34:31 by pbongiov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS_DIR = objs
 
 OBJS	=$(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
-CFLAGS = -g -Iinclude #-fsanitize=thread #-Wall -Wextra -Werror 
+CFLAGS = -g -Iinclude -Wall -Wextra -Werror #-fsanitize=thread
 CC = cc
 
 all:	$(NAME)
@@ -40,7 +40,7 @@ clean:
 	@rm -rf $(OBJS)
 
 fclean:		clean
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) $(OBJS_DIR)
 
 re:		fclean 	all
 
