@@ -1,0 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/23 17:03:04 by pbongiov          #+#    #+#             */
+/*   Updated: 2025/09/23 18:30:48 by pbongiov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philobonus.h"
+
+int char_check(char **av)
+{
+    int i;
+    int j;
+
+    i = 1;
+    while (av[i])
+    {
+        j = 0;
+        while (av[i][j])
+        {
+            if (!(av[i][j] >= '0' && av[i][j] <= '9'))
+            {
+                printf("Expected only nummeric arguments\n");
+                return (0);
+            }
+            j++;
+        }
+        i++;
+    }
+    return (1);
+}
+
+long long int	ft_atol(const char *str)
+{
+	int				i;
+	int				sign;
+	long long int	n;
+
+	i = 0;
+	n = 0;
+	sign = 1;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		n = n * 10 + (str[i] - '0');
+		i++;
+	}
+	return (n * sign);
+}

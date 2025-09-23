@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/19 17:41:20 by pbongiov          #+#    #+#              #
-#    Updated: 2025/09/23 19:35:13 by pbongiov         ###   ########.fr        #
+#    Created: 2025/09/23 16:43:33 by pbongiov          #+#    #+#              #
+#    Updated: 2025/09/23 18:46:58 by pbongiov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 
-SRCS_FILES = philo.c utils.c initialize.c routine.c routine_utils.c
+SRCS_FILES = philo_bonus.c initialize.c utils.c
 
 SRCS_DIR = src
 
@@ -22,7 +22,7 @@ OBJS_DIR = objs
 
 OBJS	=$(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
-CFLAGS = -g -Iinclude -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS = -g -Iinclude #-fsanitize=thread #-Wall -Wextra -Werror
 CC = cc
 
 all:	$(NAME)
@@ -45,9 +45,9 @@ fclean:		clean
 re:		fclean 	all
 
 r:
-	make re && clear && ./philo 3 700 400 300
+	make re && clear && ./philo_bonus 3 700 400 300
 
 v:
-	make re && clear && valgrind --tool=helgrind ./philo 3 700 400 300
+	make re && clear && valgrind --tool=helgrind ./philo_bonus 3 700 400 300
 
 .PHONY : all clean fclean re
