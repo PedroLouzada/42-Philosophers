@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:53:54 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/23 20:08:54 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/24 19:12:44 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ void	*routine(t_philo *philo)
 	think = table->time_to_die - (table->time_to_eat + table->time_to_sleep);
 	pthread_mutex_lock(&philo->live_mutex);
 	philo->time_to_live = get_time() + table->time_to_die;
+	if (table->heads % 2 == 0)
+	{
+		if (philo->index % 2 != 0)
+			my_sleep(table->time_to_eat);
+	}
 	pthread_mutex_unlock(&philo->live_mutex);
 	while (1)
 	{

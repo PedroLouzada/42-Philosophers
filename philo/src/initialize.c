@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:24:05 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/23 20:09:14 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/24 14:45:41 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	mutex_init(t_table *table)
 	while (i < table->heads)
 	{
 		table->philo[i].index = i + 1;
-		table->philo[i].time_to_live = get_time();
+		table->philo[i].time_to_live = get_time() + table->time_to_die;
 		table->philo[i].has_eaten = 0;
 		if (table->philo[i].index % 2)
 		{
