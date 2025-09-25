@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/24 20:04:22 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/25 18:04:24 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,39 @@
 
 typedef struct s_table
 {
-	int				heads;
-	int				to_eat;
-	int				my_pid;
-	int				my_index;
-	int				*child_pid;
-	bool			optional;
-	bool			is_over;
-	void			*forks;
-	void			*eaters;
-	bool			has_finished;
-	pthread_t		thread_id;
-	size_t			time;
-	size_t			time_to_die;
-	size_t			time_to_eat;
-	size_t			time_to_sleep;
-	size_t			time_to_live;
-}					t_table;
+	int			heads;
+	int			to_eat;
+	int			my_pid;
+	int			my_index;
+	int			*child_pid;
+	bool		optional;
+	bool		is_over;
+	void		*forks_sem;
+	void		*eaters_sem;
+	void		*die_sem;
+	void		*print_sem;
+	void		*meal_sem;
+	bool		has_died;
+	bool		has_finished;
+	pthread_t	die_id;
+	pthread_t	alive_id;
+	size_t		time;
+	size_t		time_to_die;
+	size_t		time_to_eat;
+	size_t		time_to_sleep;
+	size_t		time_to_live;
+}				t_table;
 
-int					data_init(t_table *table, char **av);
-int					char_check(char **av);
-void				process_create(t_table *table);
-long long int		ft_atol(const char *str);
-void				routine(t_table *table);
-unsigned long		get_time(void);
-void				my_sleep(unsigned long time);
-int					print_msg(t_table *table, char *msg);
-void				time_passed(t_table *table);
-void				*die(t_table *table);
-int					timer_check(t_table *table);
+int				data_init(t_table *table, char **av);
+int				char_check(char **av);
+void			process_create(t_table *table);
+long long int	ft_atol(const char *str);
+void			routine(t_table *table);
+unsigned long	get_time(void);
+void			my_sleep(unsigned long time);
+int				print_msg(t_table *table, char *msg);
+void			time_passed(t_table *table);
+void			*die(t_table *table);
+void			*still_alive(t_table *table);
+int				timer_check(t_table *table);
 #endif

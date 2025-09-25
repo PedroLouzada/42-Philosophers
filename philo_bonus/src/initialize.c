@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:00:09 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/24 20:05:05 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/25 18:30:26 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,26 @@ int	data_init(t_table *table, char **av)
 	table->time = 0;
 	table->is_over = 0;
 	table->optional = 0;
+	table->has_died = 0;
+	sem_unlink("/print");
+	sem_unlink("/meal");
 	sem_unlink("/forks");
 	sem_unlink("/eaters");
-	table->forks = sem_open("/forks", O_CREAT, 0666, table->heads);
-	if (table->forks == SEM_FAILED)
+	sem_unlink("/die");
+	table->print_sem = sem_open("/print", O_CREAT, 0666, 1);
+	if (table->print_sem == SEM_FAILED)
 		return (printf("Error on semaphore creation\n"), 2);
-	table->eaters = sem_open("/eaters", O_CREAT, 0666, table->heads / 2);
-	if (table->eaters == SEM_FAILED)
+	table->meal_sem = sem_open("/meal", O_CREAT, 0666, 1);
+	if (table->meal_sem == SEM_FAILED)
+		return (printf("Error on semaphore creation\n"), 2);
+	table->die_sem = sem_open("/die", O_CREAT, 0666, 0);
+	if (table->die_sem == SEM_FAILED)
+		return (printf("Error on semaphore creation\n"), 2);
+	table->forks_sem = sem_open("/forks", O_CREAT, 0666, table->heads);
+	if (table->forks_sem == SEM_FAILED)
+		return (printf("Error on semaphore creation\n"), 2);
+	table->eaters_sem = sem_open("/eaters", O_CREAT, 0666, table->heads / 2);
+	if (table->eaters_sem == SEM_FAILED)
 		return (printf("Error on semaphore creation\n"), 2);
 	if (table->heads < 1 || table->time_to_die < 1 || table->time_to_eat < 1
 		|| table->time_to_sleep < 1)
@@ -57,7 +70,9 @@ void	process_create(t_table *table)
 	}
 	if (table->my_pid == 0)
 	{
-		pthread_create(&table->thread_id, NULL, (void *)die, table);
-		pthread_detach(table->thread_id);
+		pthread_create(&table->die_id, NULL, (void *)die, table);
+		pthread_detach(table->die_id);
+		pthread_create(&table->alive_id, NULL, (void *)still_alive, table);
+		pthread_detach(table->alive_id);
 	}
 }

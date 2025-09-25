@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:03:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/24 20:04:11 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/25 18:38:44 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,8 @@ void	time_passed(t_table *table)
 int	print_msg(t_table *table, char *msg)
 {
 	time_passed(table);
-	if (table->is_over)
-	{
-		return (0);
-	}
+	sem_wait(table->print_sem);
 	printf("%ld %i %s\n", table->time, table->my_index, msg);
-	return (1);
-}
-
-int	timer_check(t_table *table)
-{
-	if (get_time() > table->time_to_live)
-	{
-		table->is_over = 1;
-		print_msg(table, "died");
-		return (0);
-	}
+	sem_post(table->print_sem);
 	return (1);
 }
