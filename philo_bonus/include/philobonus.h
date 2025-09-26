@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/25 18:04:24 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/26 19:22:22 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ typedef struct s_table
 	void		*die_sem;
 	void		*print_sem;
 	void		*meal_sem;
+	void		*done_sem;
 	bool		has_died;
-	bool		has_finished;
+	int			meal_count;
 	pthread_t	die_id;
 	pthread_t	alive_id;
 	size_t		time;

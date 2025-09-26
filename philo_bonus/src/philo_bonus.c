@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 16:35:44 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/25 17:42:25 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/26 19:23:01 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int ac, char **av)
 			waitpid(table.child_pid[i], NULL, 0);
 			i++;
 		}
+		sem_close(table.done_sem);
+		sem_unlink("/done");
 		sem_close(table.eaters_sem);
 		sem_unlink("/eaters");
 		sem_close(table.forks_sem);

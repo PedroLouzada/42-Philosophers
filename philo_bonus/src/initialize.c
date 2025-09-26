@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:00:09 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/25 18:30:26 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/26 19:22:35 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,16 @@ int	data_init(t_table *table, char **av)
 	table->is_over = 0;
 	table->optional = 0;
 	table->has_died = 0;
+	table->meal_count = 0;
 	sem_unlink("/print");
 	sem_unlink("/meal");
 	sem_unlink("/forks");
 	sem_unlink("/eaters");
 	sem_unlink("/die");
+	sem_unlink("/done");
+	table->done_sem = sem_open("/done", O_CREAT, 0666, 1);
+	if (table->done_sem == SEM_FAILED)
+		return (printf("Error on semaphore creation\n"), 2);
 	table->print_sem = sem_open("/print", O_CREAT, 0666, 1);
 	if (table->print_sem == SEM_FAILED)
 		return (printf("Error on semaphore creation\n"), 2);

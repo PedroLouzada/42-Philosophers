@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:39:18 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/25 19:19:00 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/26 19:25:15 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ void	*still_alive(t_table *table)
 	exit(1);
 	return (NULL);
 }
+
+void *finished(t_table *table)
+{
+	sem_wait(table->done_sem);
+	exit(1);
+	return (NULL);
+}
 static void	ph_eat(t_table *table)
 {
 	sem_wait(table->eaters_sem);
@@ -49,6 +56,8 @@ static void	ph_eat(t_table *table)
 	sem_wait(table->meal_sem);
 	table->time_to_live += table->time_to_die;
 	sem_post(table->meal_sem);
+	if (table->to_eat == ++table->meal_count)
+		sem_post(table->done_sem);
 	print_msg(table, "is eating");
 	my_sleep(table->time_to_eat);
 	sem_post(table->eaters_sem);
