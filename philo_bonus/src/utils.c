@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:03:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/25 18:38:44 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:17:32 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,49 @@ int	print_msg(t_table *table, char *msg)
 	printf("%ld %i %s\n", table->time, table->my_index, msg);
 	sem_post(table->print_sem);
 	return (1);
+}
+
+void exit_error(int i)
+{
+	if (i == 0)
+		printf("Error on semaphore creation\n");
+	else if (i == 1)
+		printf("Arguments must be greater than 0\n");
+	exit (1);
+}
+static int	num_len(int n)
+{
+	int	i;
+
+	i = 0;
+	if (n <= 0)
+		i++;
+	while (n != 0)
+	{
+		n = n / 10;
+		i++;
+	}
+	return (i + 1);
+}
+
+char	*ft_itoa(int n)
+{
+	int				len;
+	char			*str;
+	unsigned int	num;
+
+	len = num_len(n);
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	str[0] = '/';
+	str[len] = '\0';
+	num = n;
+	while (num > 0)
+	{
+		str[len - 1] = (num % 10) + '0';
+		num = num / 10;
+		len--;
+	}
+	return (str);
 }

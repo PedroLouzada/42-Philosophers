@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 16:02:02 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/23 16:22:05 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:19:33 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	finish_check(t_table *table, t_philo *philo)
 int	timer_check(t_table *table, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->live_mutex);
-	if (get_time() > philo->time_to_live)
+	if (get_time() >= philo->time_to_live)
 	{
 		pthread_mutex_unlock(&philo->live_mutex);
 		print_msg(philo, "died");

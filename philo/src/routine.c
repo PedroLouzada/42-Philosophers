@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:53:54 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/24 19:12:44 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/27 17:49:13 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,15 @@ static void	ph_sleep(t_table *table, t_philo *philo)
 
 static void	ph_think(t_philo *philo, int think)
 {
-	if (think < 10)
+	if (think < 0)
 		return ;
+	pthread_mutex_lock(&philo->live_mutex);
+	if ((unsigned long)think <= philo->time_to_live - get_time())
+	{
+		pthread_mutex_unlock(&philo->live_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->live_mutex);
 	if (!print_msg(philo, "is thinking"))
 		return ;
 	my_sleep(think);
@@ -84,6 +91,7 @@ static void	ph_think(t_philo *philo, int think)
 void	*routine(t_philo *philo)
 {
 	int		think;
+	size_t	time;
 	t_table	*table;
 
 	table = philo->table;
@@ -92,17 +100,26 @@ void	*routine(t_philo *philo)
 	philo->time_to_live = get_time() + table->time_to_die;
 	if (table->heads % 2 == 0)
 	{
+		time = table->time_to_eat;
+		if (table->time_to_die < table->time_to_eat)
+			time = table->time_to_die;
 		if (philo->index % 2 != 0)
-			my_sleep(table->time_to_eat);
+			my_sleep(time);
 	}
 	pthread_mutex_unlock(&philo->live_mutex);
 	while (1)
 	{
+		if (!finish_check(table, philo))
+			break ;
 		ph_eat(table, philo);
 		if (!finish_check(table, philo))
 			break ;
 		ph_sleep(table, philo);
+		if (!finish_check(table, philo))
+			break ;
 		ph_think(philo, think);
+		if (!finish_check(table, philo))
+			break ;
 	}
 	return (NULL);
 }

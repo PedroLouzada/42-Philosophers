@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/26 19:22:22 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/27 14:51:21 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_table
 	int			meal_count;
 	pthread_t	die_id;
 	pthread_t	alive_id;
+	pthread_t	done_id;
 	size_t		time;
 	size_t		time_to_die;
 	size_t		time_to_eat;
@@ -51,7 +52,7 @@ typedef struct s_table
 	size_t		time_to_live;
 }				t_table;
 
-int				data_init(t_table *table, char **av);
+void			data_init(t_table *table, char **av);
 int				char_check(char **av);
 void			process_create(t_table *table);
 long long int	ft_atol(const char *str);
@@ -62,5 +63,7 @@ int				print_msg(t_table *table, char *msg);
 void			time_passed(t_table *table);
 void			*die(t_table *table);
 void			*still_alive(t_table *table);
-int				timer_check(t_table *table);
+void			exit_error(int i);
+void			sem_start(t_table *table);
+char			*ft_itoa(int n);
 #endif
