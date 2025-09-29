@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:00:09 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/27 14:53:52 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/29 19:34:36 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	process_create(t_table *table)
 	}
 	if (table->my_pid != 0)
 		return ;
+	table->time_to_live = get_time() + table->time_to_die;
 	pthread_create(&table->die_id, NULL, (void *)die, table);
 	pthread_detach(table->die_id);
 	pthread_create(&table->alive_id, NULL, (void *)still_alive, table);

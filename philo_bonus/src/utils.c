@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:03:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/27 17:17:32 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/29 19:09:40 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	time_passed(t_table *table)
 
 int	print_msg(t_table *table, char *msg)
 {
-	time_passed(table);
 	sem_wait(table->print_sem);
+	time_passed(table);
 	printf("%ld %i %s\n", table->time, table->my_index, msg);
 	sem_post(table->print_sem);
 	return (1);
@@ -140,4 +140,33 @@ char	*ft_itoa(int n)
 		len--;
 	}
 	return (str);
+}
+
+void unlink_stuff(t_table *table)
+{
+	sem_close(table->done_sem);
+	sem_unlink("/done");
+	sem_close(table->eaters_sem);
+	sem_unlink("/eaters");
+	sem_close(table->forks_sem);
+	sem_unlink("/forks");
+	sem_close(table->die_sem);
+	sem_unlink("/die");
+	sem_close(table->print_sem);
+	sem_unlink("/print");
+	sem_close(table->meal_sem);
+	sem_unlink("/meal");
+	free(table->child_pid);
+}
+
+void close_and_exit(t_table *table)
+{
+	sem_close(table->done_sem);
+	sem_close(table->eaters_sem);
+	sem_close(table->forks_sem);
+	sem_close(table->die_sem);
+	sem_close(table->print_sem);
+	sem_close(table->meal_sem);
+	free(table->child_pid);
+	exit(1);
 }

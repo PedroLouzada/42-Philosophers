@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/27 14:51:21 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/29 18:58:43 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_table
 	size_t		time_to_live;
 }				t_table;
 
+void			close_and_exit(t_table *table);
+void			unlink_stuff(t_table *table);
 void			data_init(t_table *table, char **av);
 int				char_check(char **av);
 void			process_create(t_table *table);
