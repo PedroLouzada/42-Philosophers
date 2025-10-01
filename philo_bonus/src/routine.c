@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 14:39:18 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/29 19:34:05 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:17:29 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,10 @@ void	routine(t_table *table)
 {
 	if (table->optional)
 		create_optional(table);
-	// sem_wait(table->meal_sem);
-	// table->time_to_live = get_time() + table->time_to_die;
-	// sem_post(table->meal_sem);
+	sem_wait(table->meal_sem);
+	table->time_to_live = get_time() + table->time_to_die;
+	sem_post(table->meal_sem);
+	my_sleep(table->my_index % 2 * 10);
 	while (1)
 	{
 		ph_eat(table);

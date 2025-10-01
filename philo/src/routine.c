@@ -6,11 +6,23 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:53:54 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/28 19:34:27 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/10/01 20:58:24 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	finished(t_table *table)
+{
+	pthread_mutex_lock(&table->finished_mutex);
+	if (table->has_finished == table->heads)
+	{
+		pthread_mutex_unlock(&table->finished_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&table->finished_mutex);
+	return (0);
+}
 
 void	*die(t_table *table)
 {
@@ -19,21 +31,16 @@ void	*die(t_table *table)
 
 	i = 0;
 	j = 0;
+	my_sleep(60);
 	while (1)
 	{
 		if (!timer_check(table, &table->philo[i]))
 			break ;
-		pthread_mutex_lock(&table->finished_mutex);
-		if (table->has_finished == table->heads)
-		{
-			pthread_mutex_unlock(&table->finished_mutex);
+		if (finished(table))
 			break ;
-		}
-		pthread_mutex_unlock(&table->finished_mutex);
 		i++;
 		if (i >= table->heads)
 			i = 0;
-		usleep(250);
 	}
 	return (NULL);
 }
@@ -76,10 +83,15 @@ void	*routine(t_philo *philo)
 {
 	size_t	time;
 	t_table	*table;
+	bool	i;
+	bool	n;
 
+	i = 0;
+	n = (philo->index % 2 != 0 && philo->table->heads % 2 != 0);
 	table = philo->table;
 	pthread_mutex_lock(&philo->live_mutex);
 	philo->time_to_live = get_time() + table->time_to_die;
+	pthread_mutex_unlock(&philo->live_mutex);
 	if (table->heads % 2 == 0)
 	{
 		time = table->time_to_eat;
@@ -88,14 +100,16 @@ void	*routine(t_philo *philo)
 		if (philo->index % 2 != 0)
 			my_sleep(time);
 	}
-	pthread_mutex_unlock(&philo->live_mutex);
 	while (1)
 	{
+		if (n && i)
+			usleep(500);
 		ph_eat(table, philo);
 		if (!finish_check(table, philo))
 			break ;
 		ph_sleep(table, philo);
 		print_msg(philo, "is thinking");
+		i = 1;
 	}
 	return (NULL);
 }
