@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:46:00 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/09/23 15:32:36 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/10/03 18:51:13 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(int ac, char **av)
 	{
 		table.optional = 1;
 		table.to_eat = ft_atol(av[5]);
+		if (table.to_eat == 0)
+			return (0);
 	}
 	thread_create(&table);
 	free_stuff(&table);

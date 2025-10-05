@@ -6,7 +6,7 @@
 #    By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/19 17:41:20 by pbongiov          #+#    #+#              #
-#    Updated: 2025/09/29 15:10:44 by pbongiov         ###   ########.fr        #
+#    Updated: 2025/10/03 17:59:51 by pbongiov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS_DIR = objs
 
 OBJS	=$(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
-CFLAGS = -g -Iinclude -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS = -g -Iinclude -Wall -Wextra -Werror
 CC = cc
 
 all:	$(NAME)

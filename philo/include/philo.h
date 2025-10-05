@@ -6,7 +6,7 @@
 /*   By: pbongiov <pbongiov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:55:04 by pbongiov          #+#    #+#             */
-/*   Updated: 2025/10/01 21:07:22 by pbongiov         ###   ########.fr       */
+/*   Updated: 2025/10/03 18:50:44 by pbongiov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ typedef struct s_philo
 struct					s_table
 {
 	bool				over;
+	bool				optional;
+	bool				flag;
 	int					heads;
 	int					has_finished;
-	bool				optional;
 	int					to_eat;
 	unsigned long		time;
 	unsigned long		time_to_die;
@@ -55,6 +56,7 @@ struct					s_table
 	t_philo				*philo;
 };
 
+void					sleep_check(t_table *table, t_philo *philo);
 void					*one_philo(t_philo *philo);
 void					update_time(t_table *table, t_philo *philo);
 int						char_check(char **str);
