@@ -1,6 +1,6 @@
 # Philosophers
 
-<img src="imgs/philo_img.png" width="400" height="500" />
+<img src="imgs/philo_img.png" width="400" height="450" />
 
 ## About the Project
 
