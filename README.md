@@ -60,6 +60,7 @@ make
 
 ### Example:
 ```bash
+make bonus
 ./philo 5 800 200 200
 ```
 ➡️ 5 philosophers  
