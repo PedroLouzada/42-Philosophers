@@ -1,6 +1,6 @@
 # Philosophers
 
-<img src="imgs/philo_img.png" width="400" alt="Dining Philosophers Simulation" />
+<img src="imgs/philo_img.png" width="350" height="200" />
 
 ## About the Project
 
